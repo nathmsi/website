@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, HashRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 
 import RealTimeDB from '../RealTimeDB';
@@ -20,7 +20,6 @@ class Routes extends React.Component {
 
   render() {
     return (
-      <HashRouter basename='/'>
         <Switch>
           <Route exact path={ROUTES.RealTime} component={(props) => <RealTimeDB  {...props} openLoadingOverlay={this.props.openLoadingOverlay} closeLoadingOverlay={this.props.closeLoadingOverlay} />} />
           <Route exact path={ROUTES.SIGN_UP} component={(props) => <SignUpPage {...props} openLoadingOverlay={this.props.openLoadingOverlay} closeLoadingOverlay={this.props.closeLoadingOverlay} />} />
@@ -33,7 +32,6 @@ class Routes extends React.Component {
           <Route exact path={ROUTES.ADMIN} component={(props) => <AdminPage {...props} openLoadingOverlay={this.props.openLoadingOverlay} closeLoadingOverlay={this.props.closeLoadingOverlay} />} />
           <Route render={NotFound} />
         </Switch>
-      </HashRouter>
     );
   }
 }

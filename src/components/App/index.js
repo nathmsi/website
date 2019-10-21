@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter } from "react-router-dom";
 
 import Navigation from '../Navigation';
 import Routes from "../Routes";
@@ -40,7 +40,7 @@ class App extends Component {
    
 
     return (
-      <Router>
+      <HashRouter basename='/'>
         <div className="flyout">
           <Navigation toggleCollapse={this.toggleCollapse} closeCollapse={this.closeCollapse}  />
 
@@ -61,7 +61,7 @@ class App extends Component {
           </LoadingOverlay>
           <Footer />
         </div>
-      </Router>
+        </HashRouter>
     );
   }
 }
