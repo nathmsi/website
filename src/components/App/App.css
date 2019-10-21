@@ -1,0 +1,7 @@
+.MyLoader_overlay {
+    background: rgba(0,0,0,0);
+}
+
+._loading_overlay_content {
+    background: rgba(186, 13, 255, 0);
+}   
