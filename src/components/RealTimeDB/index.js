@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
 
-import { MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBListGroupItem } from 'mdbreact';
+import { MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBListGroupItem , MDBContainer , MDBRow , MDBCol } from 'mdbreact';
 
 import { withAuthorization } from '../Session';
 
 class Home extends Component {
-
+  
   state = {
     loading: false,
     messages: [],
     message: ''
+
+    
   }
 
   componentDidMount = async () => {
@@ -64,41 +66,47 @@ class Home extends Component {
   render() {
     const { messages, message } = this.state
     return (
-      <MDBCard>
-        <MDBCardBody className="mx-2">
-          <div className="text-center">
-            <h3 className="dark-grey-text mb-5">
-              <strong> real time data base</strong>
-            </h3>
-          </div>
-          <MDBInput
-            label="Your messsage"
-            group
-            value={message}
-            onChange={this.onChange}
-            onKeyUp={this.handleKeyUp}
-            type="text"
-            name="message"
-            validate
-            error="wrong"
-            success="right"
-          />
+      <MDBContainer className="mt-3">
+        <MDBRow className="py-3">
+          <MDBCol md="12">
+            <MDBCard>
+              <MDBCardBody className="mx-2">
+                <div className="text-center">
+                  <h3 className="dark-grey-text mb-5">
+                    <strong> real time data base</strong>
+                  </h3>
+                </div>
+                <MDBInput
+                  label="Your messsage"
+                  group
+                  value={message}
+                  onChange={this.onChange}
+                  onKeyUp={this.handleKeyUp}
+                  type="text"
+                  name="message"
+                  validate
+                  error="wrong"
+                  success="right"
+                />
 
-          <div className="text-center mb-3">
-            <MDBBtn
-              type="button"
-              gradient="blue"
-              rounded
-              className="btn-block z-depth-1a"
-              onClick={this.addItem}>
-              -add-message-
+                <div className="text-center mb-3">
+                  <MDBBtn
+                    type="button"
+                    gradient="blue"
+                    rounded
+                    className="btn-block z-depth-1a"
+                    onClick={this.addItem}>
+                    -add-message-
                 </MDBBtn>
-          </div>
-        </MDBCardBody>
-        {
-          messages.map((message, i) => <Message key={i} handleDeleteMessage={this.handleDeleteMessage} i={i} message={message} />)
-        }
-      </MDBCard>
+                </div>
+              </MDBCardBody>
+              {
+                messages.map((message, i) => <Message key={i} handleDeleteMessage={this.handleDeleteMessage} i={i} message={message} />)
+              }
+            </MDBCard>
+          </MDBCol >
+        </MDBRow>
+      </MDBContainer>
     );
   }
 

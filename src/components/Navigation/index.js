@@ -1,9 +1,10 @@
 import React from 'react';
 
 import {
-  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse,MDBIcon
+  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, 
+  MDBNavbarToggler, MDBCollapse,MDBIcon ,MDBDropdown  , MDBDropdownToggle , 
+  MDBDropdownMenu , MDBDropdownItem
 } from "mdbreact";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 import SignOutButton from '../SignOut';
 import { SignInButton } from '../SignOut';
@@ -12,23 +13,22 @@ import * as ROUTES from '../../constants/routes';
 
 import { AuthUserContext } from '../Session';
 
-const Navigation = ({ toggleCollapse, closeCollapse, collapseID }) => (
+const Navigation = ({ toggleCollapse, closeCollapse, collapseID  }) => (
   <div>
     <AuthUserContext.Consumer>
       {authUser =>
         authUser ?
           <NavigationAuth toggleCollapse={toggleCollapse} closeCollapse={closeCollapse} collapseID={collapseID} email={authUser.email} />
           :
-          <NavigationNonAuth toggleCollapse={toggleCollapse} closeCollapse={closeCollapse} collapseID={collapseID} />
+          <NavigationNonAuth toggleCollapse={toggleCollapse} closeCollapse={closeCollapse} collapseID={collapseID}  />
       }
     </AuthUserContext.Consumer>
   </div>
 );
 
 const NavigationAuth = ({ toggleCollapse, closeCollapse, collapseID, email }) => (
-  <MDBNavbar color="indigo" dark expand="md" fixed="" scrolling>
+  <MDBNavbar color="blue-gradient" dark expand="md" fixed="" scrolling>
     <MDBNavbarBrand href="/" className="py-0 font-weight-bold">
-      <Logo style={{ height: "2.5rem", width: "2.5rem" }} />
       <strong className="align-middle">Web Site</strong>
     </MDBNavbarBrand>
     <MDBNavbarToggler
@@ -82,15 +82,21 @@ const NavigationAuth = ({ toggleCollapse, closeCollapse, collapseID, email }) =>
           <MDBNavLink
             to={ROUTES.ACCOUNT}
           >
-            <MDBIcon icon="user" />
             {' ' + email}
           </MDBNavLink>
         </MDBNavItem>
         <MDBNavItem >
-          <MDBNavLink
-            to='/signin'>
-            <SignOutButton />
-          </MDBNavLink>
+        <MDBDropdown>
+                  <MDBDropdownToggle nav caret>
+                   <MDBIcon icon="user" />
+                  </MDBDropdownToggle>
+                  <MDBDropdownMenu right>
+                    <MDBNavLink to='/signin'> <SignOutButton /></MDBNavLink>
+                    <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
+                    <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                    <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                  </MDBDropdownMenu>
+                </MDBDropdown>
         </MDBNavItem>
       </MDBNavbarNav>
     </MDBCollapse>
@@ -99,9 +105,8 @@ const NavigationAuth = ({ toggleCollapse, closeCollapse, collapseID, email }) =>
 );
 
 const NavigationNonAuth = ({ toggleCollapse, closeCollapse, collapseID }) => (
-  <MDBNavbar color="indigo" dark expand="md" fixed="" scrolling>
+  <MDBNavbar color="blue-gradient" dark expand="md" fixed="" scrolling>
     <MDBNavbarBrand href="/" className="py-0 font-weight-bold">
-      <Logo style={{ height: "2.5rem", width: "2.5rem" }} />
       <strong className="align-middle">Web Site</strong>
     </MDBNavbarBrand>
     <MDBNavbarToggler

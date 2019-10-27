@@ -5,7 +5,6 @@ import Navigation from '../Navigation';
 import Routes from "../Routes";
 
 import { withAuthentication } from '../Session';
-import LoadingOverlay from 'react-loading-overlay';
 import Footer from '../Footer'
 
 
@@ -15,6 +14,7 @@ class App extends Component {
 
   state = {
     isLoading : false,
+    collapseID: ""
   };
 
 
@@ -37,28 +37,29 @@ class App extends Component {
   
 
   render() {
-   
+
+    const overlay = (
+      <div
+        id="sidenav-overlay"
+        style={{ backgroundColor: "transparent" }}
+        onClick={this.toggleCollapse("mainNavbarCollapse")}
+      />
+    );
+
+    const { collapseID } = this.state;
 
     return (
       <HashRouter basename='/'>
         <div className="flyout">
-          <Navigation toggleCollapse={this.toggleCollapse} closeCollapse={this.closeCollapse}  />
+          <Navigation toggleCollapse={this.toggleCollapse} closeCollapse={this.closeCollapse} collapseID={collapseID}  />
 
-          <LoadingOverlay
-            active={this.state.isLoading}
-            spinner={<div className="spinner-border text-dark" role="status"></div>}
-            classNamePrefix='MyLoader_'
-            text={<p className="font-weight-bold bg-dark">Loading...</p>}
-          >
+            {collapseID && overlay}
+            
             <main style={{ marginTop: "4rem" }}>
-              <br/>
-                <div className="mt-3 mb-5">
-                  
-                          <Routes openLoadingOverlay={this.openLoadingOverlay} closeLoadingOverlay={this.closeLoadingOverlay} />
-                        
-                </div>
+              <br/>                
+                          <Routes openLoadingOverlay={this.openLoadingOverlay} closeLoadingOverlay={this.closeLoadingOverlay} />               
             </main>
-          </LoadingOverlay>
+
           <Footer />
         </div>
         </HashRouter>

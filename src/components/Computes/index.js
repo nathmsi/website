@@ -6,24 +6,21 @@ import { withAuthorization } from '../Session';
 
 import { DatatablePage } from '../ListView'
 
-import { MDBContainer, MDBBtn , MDBInput } from "mdbreact";
-
+import { MDBContainer, MDBBtn, MDBInput } from "mdbreact";
 
 class Home extends Component {
 
     state = {
-        loading: false,
+        loading: true,
         computers: [],
-        name : '',
-        brand : '', 
-        price : ''
+        name: '',
+        brand: '',
+        price: ''
     }
 
     componentDidMount() {
-        this.setState({ loading: true });
         this.getData()
         //this.addItem()
-        this.setState({ loading: false });
     }
 
 
@@ -62,6 +59,7 @@ class Home extends Component {
                     rows: computers
                 }
                 this.setState({ computers: data });
+                this.setState({ loading: false });
             });
     }
 
@@ -73,14 +71,14 @@ class Home extends Component {
 
 
     addItem = () => {
-        const {  name , brand , price } = this.state
+        const { name, brand, price } = this.state
         // Add a new document in collection "cities"
         this.props.firebase.computers().doc(new Date().getTime().toString()).set({
-            name  ,
+            name,
             brand,
             price
         })
-            .then( () =>{
+            .then(() => {
                 console.log("Document successfully written!");
                 this.getData()
             })
@@ -103,30 +101,37 @@ class Home extends Component {
     //     this.setState({ loading: false });
     // }
 
-    render( ) {
-        const { computers , name , brand , price } = this.state
+    render() {
+        const { loading, computers, name, brand, price } = this.state
         return (
             <>
-            <DatatablePage data={computers} /> 
-            <AddElement addItem={this.addItem} onChange={this.onChange} price={price} name={name} brand={brand}/>
+                {
+                    loading === true ?
+                         <div className="text-center spinner-border" />
+                        :
+                        <>
+                            <DatatablePage data={computers} />
+                            <AddElement addItem={this.addItem} onChange={this.onChange} price={price} name={name} brand={brand} />
+                        </>
+                }
             </>
         );
     }
 
 }
 
-const AddElement = ( {  name , brand , price , onChange , addItem } ) =>(
+const AddElement = ({ name, brand, price, onChange, addItem }) => (
     <MDBContainer>
-       <MDBInput label="Name" group value={name} onChange={onChange}  type="text" name="name"  />
-       <MDBInput label="brand" group value={brand} onChange={onChange}  type="text" name="brand"  />
-       <MDBInput label="price" group value={price} onChange={onChange}  type="text" name="price"  />
-          <MDBBtn
+        <MDBInput label="Name" group value={name} onChange={onChange} type="text" name="name" />
+        <MDBInput label="brand" group value={brand} onChange={onChange} type="text" name="brand" />
+        <MDBInput label="price" group value={price} onChange={onChange} type="text" name="price" />
+        <MDBBtn
             type="button"
             gradient="blue"
             rounded
             onClick={addItem}
             className="btn-block "
-          >
+        >
             Add New Computer
                 </MDBBtn>
     </MDBContainer>

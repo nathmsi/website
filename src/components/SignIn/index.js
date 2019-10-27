@@ -34,7 +34,7 @@ class SignInFormBase extends Component {
 
 
   onSubmit = async (event) => {
-    this.props.openLoadingOverlay()
+    
     const { email, password } = this.state;
 
     this.props.firebase
@@ -43,14 +43,14 @@ class SignInFormBase extends Component {
         if (this._isMounted === true) {
           this.setState({ ...INITIAL_STATE });
         }
-        this.props.closeLoadingOverlay()
+        
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
         if (this._isMounted === true) {
           this.setState({ error })
         }
-        this.props.closeLoadingOverlay()
+        
         if (error.message !== undefined) {
           alert(error.message)
         }
@@ -61,7 +61,7 @@ class SignInFormBase extends Component {
   }
 
   handleGoogleSingIn = event => {
-    this.props.openLoadingOverlay()
+    
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
@@ -75,18 +75,18 @@ class SignInFormBase extends Component {
           });
       })
       .then(() => {
-        this.props.closeLoadingOverlay()
+        
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.props.closeLoadingOverlay()
+        
         if (this._isMounted === true) { this.setState({ error }); }
       });
     event.preventDefault();
   }
 
   handleFacebookSingIn = event => {
-    this.props.openLoadingOverlay()
+    
     this.props.firebase
       .doSignInWithFacebook()
       .then(socialAuthUser => {
@@ -100,18 +100,18 @@ class SignInFormBase extends Component {
           });
       })
       .then(() => {
-        this.props.closeLoadingOverlay()
+        
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.props.closeLoadingOverlay()
+        
         if (this._isMounted === true) { this.setState({ error }); }
       });
     event.preventDefault();
   };
 
   handleTwitterSingIn = event => {
-    this.props.openLoadingOverlay()
+    
     this.props.firebase
       .doSignInWithTwitter()
       .then(socialAuthUser => {
@@ -125,14 +125,14 @@ class SignInFormBase extends Component {
           });
       })
       .then(() => {
-        this.props.closeLoadingOverlay()
+        
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.props.closeLoadingOverlay()
+        
         if (this._isMounted === true) { this.setState({ error }); }
       });
-    this.props.closeLoadingOverlay()
+    
     event.preventDefault();
   };
 
