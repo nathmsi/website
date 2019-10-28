@@ -6,7 +6,7 @@ import { withFirebase } from '../Firebase';
 const SignOutButton = ({ firebase }) => (
   // <div  onClick={firebase.doSignOut} >Sign Out</div>
   // <MDBBtn color="primary" onClick={firebase.doSignOut}  rounded>Primary</MDBBtn>
-  <div  onClick={firebase.doSignOut} className="text-dark d-none d-md-inline">Sign Out</div>
+  <div  onClick={firebase.doSignOut} className="d-none d-md-inline">Sign Out</div>
 );
 
 const SignInButton = () => (

@@ -6,8 +6,7 @@ import { withAuthorization } from '../Session';
 
 import { DatatablePage } from '../ListView'
 
-import { MDBContainer, MDBBtn, MDBInput } from "mdbreact";
-
+import { MDBContainer, MDBRow, MDBCol, MDBJumbotron, MDBIcon, MDBAnimation, MDBInput, MDBBtn } from "mdbreact";
 class Home extends Component {
 
     state = {
@@ -104,17 +103,32 @@ class Home extends Component {
     render() {
         const { loading, computers, name, brand, price } = this.state
         return (
-            <>
-                {
-                    loading === true ?
-                         <div className="text-center spinner-border" />
-                        :
-                        <>
-                            <DatatablePage data={computers} />
-                            <AddElement addItem={this.addItem} onChange={this.onChange} price={price} name={name} brand={brand} />
-                        </>
-                }
-            </>
+            <MDBAnimation type="zoomIn" duration="500ms">
+                <MDBContainer>
+                    <MDBRow>
+                        <MDBCol md="12" className="mt-3 mx-auto">
+                            <MDBJumbotron>
+                                <h1 className="text-center">
+                                    <MDBIcon icon="window-restore" className="mr-2 indigo-text" />
+                                    Computers {loading === true && <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span> </div>}
+                                </h1>
+                                {
+                                    loading === false &&
+                                        <div class="row">
+                                            <div class="col-9">
+                                            <DatatablePage data={computers} />
+                                            </div>
+                                            <div class="col-3">
+                                            <AddElement addItem={this.addItem} onChange={this.onChange} price={price} name={name} brand={brand} />
+                                            </div>
+                                        </div>
+                                }
+
+                            </MDBJumbotron>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+            </MDBAnimation>
         );
     }
 

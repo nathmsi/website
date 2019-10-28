@@ -1,9 +1,8 @@
 import React from 'react';
 
 import {
-  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, 
-  MDBNavbarToggler, MDBCollapse,MDBIcon ,MDBDropdown  , MDBDropdownToggle , 
-  MDBDropdownMenu , MDBDropdownItem
+  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink,
+  MDBNavbarToggler, MDBCollapse
 } from "mdbreact";
 
 import SignOutButton from '../SignOut';
@@ -13,14 +12,14 @@ import * as ROUTES from '../../constants/routes';
 
 import { AuthUserContext } from '../Session';
 
-const Navigation = ({ toggleCollapse, closeCollapse, collapseID  }) => (
+const Navigation = ({ toggleCollapse, closeCollapse, collapseID }) => (
   <div>
     <AuthUserContext.Consumer>
       {authUser =>
         authUser ?
           <NavigationAuth toggleCollapse={toggleCollapse} closeCollapse={closeCollapse} collapseID={collapseID} email={authUser.email} />
           :
-          <NavigationNonAuth toggleCollapse={toggleCollapse} closeCollapse={closeCollapse} collapseID={collapseID}  />
+          <NavigationNonAuth toggleCollapse={toggleCollapse} closeCollapse={closeCollapse} collapseID={collapseID} />
       }
     </AuthUserContext.Consumer>
   </div>
@@ -86,17 +85,11 @@ const NavigationAuth = ({ toggleCollapse, closeCollapse, collapseID, email }) =>
           </MDBNavLink>
         </MDBNavItem>
         <MDBNavItem >
-        <MDBDropdown>
-                  <MDBDropdownToggle nav caret>
-                   <MDBIcon icon="user" />
-                  </MDBDropdownToggle>
-                  <MDBDropdownMenu right>
-                    <MDBNavLink to='/signin'> <SignOutButton /></MDBNavLink>
-                    <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-                    <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                    <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                  </MDBDropdownMenu>
-                </MDBDropdown>
+          <MDBNavLink
+            to={ROUTES.SIGN_IN}
+          >
+            <SignOutButton/>
+          </MDBNavLink>
         </MDBNavItem>
       </MDBNavbarNav>
     </MDBCollapse>

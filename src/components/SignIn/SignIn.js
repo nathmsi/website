@@ -7,7 +7,7 @@ import { PasswordForgetLink } from '../PasswordForget';
 
 
 
-const FormPage = ({ onChange, password, email, onSubmit, handleGoogleSingIn, handleFacebookSingIn, handleTwitterSingIn }) => {
+const FormPage = ({ onChange, password, email, onSubmit, handleGoogleSingIn, handleFacebookSingIn, handleTwitterSingIn, isLoading }) => {
   return (
     <MDBCard>
       <MDBCardBody className="mx-2">
@@ -46,8 +46,13 @@ const FormPage = ({ onChange, password, email, onSubmit, handleGoogleSingIn, han
             onClick={onSubmit}
             className="btn-block z-depth-1a"
           >
-            Sign in
-                </MDBBtn>
+            {
+              isLoading === false ?
+                <strong>Sign in</strong>
+                :
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+          </MDBBtn>
         </div>
         <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
           or Sign in with:

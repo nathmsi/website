@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
+  isLoading : false 
 };
 
 class SignUpFormBase extends Component {
@@ -24,7 +25,7 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     const { username, email, passwordOne } = this.state;
-
+    this.setState({ isLoading : true })
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
@@ -37,15 +38,18 @@ class SignUpFormBase extends Component {
           })
           .then(() => {
             this.setState({ ...INITIAL_STATE });
+            this.setState({ isLoading : false })
             this.props.history.push(ROUTES.HOME);
           })
           .catch(error => {
             this.setState({ error });
+            this.setState({ isLoading : false })
             alert(error.message)
           });
       })
       .catch(error => {
         this.setState({ error });
+        this.setState({ isLoading : false })
         alert(error)
       });
 
@@ -62,6 +66,7 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      isLoading
     } = this.state;
 
 
@@ -70,7 +75,7 @@ class SignUpFormBase extends Component {
         <MDBRow>
           <MDBCol md="6" lg="5" className="mx-auto float-none white z-depth-1 py-2 px-2">
             <MDBCardBody>
-              <Signup passwordTwo={passwordTwo} username={username} passwordOne={passwordOne} email={email} changeHandler={this.onChange} onSubmit={this.onSubmit} />
+              <Signup passwordTwo={passwordTwo} username={username} passwordOne={passwordOne} email={email} changeHandler={this.onChange} onSubmit={this.onSubmit} isLoading={isLoading} />
             </MDBCardBody>
           </MDBCol>
         </MDBRow>

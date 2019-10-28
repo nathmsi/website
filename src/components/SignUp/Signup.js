@@ -2,7 +2,7 @@ import React from "react";
 import { MDBModalFooter, MDBCard, MDBCardBody, MDBInput, MDBBtn } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import '../SignIn/Signin.css'
-const FormPage = ({ passwordTwo, username, changeHandler, passwordOne, email, onSubmit }) => {
+const FormPage = ({ passwordTwo, username, changeHandler, passwordOne, email, onSubmit , isLoading }) => {
     return (
         <MDBCard>
             <MDBCardBody className="mx-2">
@@ -62,8 +62,13 @@ const FormPage = ({ passwordTwo, username, changeHandler, passwordOne, email, on
                         className="btn-block z-depth-1a"
                         onClick={onSubmit}
                     >
-                        Register
-                </MDBBtn>
+                        {
+                            isLoading === false ?
+                                <strong>Register</strong>
+                                :
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        }
+                    </MDBBtn>
                 </div>
 
             </MDBCardBody>

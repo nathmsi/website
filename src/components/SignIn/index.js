@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   error: '',
+  isLoading : false 
 };
 
 class SignInFormBase extends Component {
@@ -37,22 +38,26 @@ class SignInFormBase extends Component {
     
     const { email, password } = this.state;
 
+    this.setState({ isLoading : true })
+
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         if (this._isMounted === true) {
           this.setState({ ...INITIAL_STATE });
         }
-        
+        this.setState({ isLoading : false })    
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
         if (this._isMounted === true) {
           this.setState({ error })
+          this.setState({ isLoading : false })
         }
         
         if (error.message !== undefined) {
           alert(error.message)
+          this.setState({ isLoading : false })
         }
       })
 
@@ -61,7 +66,7 @@ class SignInFormBase extends Component {
   }
 
   handleGoogleSingIn = event => {
-    
+    this.setState({ isLoading : true })
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
@@ -75,18 +80,21 @@ class SignInFormBase extends Component {
           });
       })
       .then(() => {
-        
+        this.setState({ isLoading : false })
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
         
-        if (this._isMounted === true) { this.setState({ error }); }
+        if (this._isMounted === true) { 
+          this.setState({ isLoading : false })
+          this.setState({ error });
+         }
       });
     event.preventDefault();
   }
 
   handleFacebookSingIn = event => {
-    
+    this.setState({ isLoading : true })
     this.props.firebase
       .doSignInWithFacebook()
       .then(socialAuthUser => {
@@ -100,18 +108,21 @@ class SignInFormBase extends Component {
           });
       })
       .then(() => {
-        
+        this.setState({ isLoading : false })
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
         
-        if (this._isMounted === true) { this.setState({ error }); }
+        if (this._isMounted === true) { 
+          this.setState({ isLoading : false })
+          this.setState({ error }); 
+        }
       });
     event.preventDefault();
   };
 
   handleTwitterSingIn = event => {
-    
+    this.setState({ isLoading : true })
     this.props.firebase
       .doSignInWithTwitter()
       .then(socialAuthUser => {
@@ -125,12 +136,15 @@ class SignInFormBase extends Component {
           });
       })
       .then(() => {
-        
+        this.setState({ isLoading : false })
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
         
-        if (this._isMounted === true) { this.setState({ error }); }
+        if (this._isMounted === true) { 
+          this.setState({ error }); 
+          this.setState({ isLoading : false })
+        }
       });
     
     event.preventDefault();
@@ -144,7 +158,7 @@ class SignInFormBase extends Component {
   };
 
   render() {
-    const { email, password, error } = this.state;
+    const { email, password, error , isLoading } = this.state;
     if (error !== '')
       console.log(error)
     return (
@@ -152,7 +166,7 @@ class SignInFormBase extends Component {
         <MDBRow>
           <MDBCol md="6" lg="5" className="mx-auto float-none white z-depth-1 py-2 px-2">
             <MDBCardBody>
-              <SingIn password={password} email={email} onChange={this.onChange} onSubmit={this.onSubmit}
+              <SingIn password={password} email={email} onChange={this.onChange} onSubmit={this.onSubmit} isLoading={isLoading}
                 handleFacebookSingIn={this.handleFacebookSingIn} handleTwitterSingIn={this.handleTwitterSingIn} handleGoogleSingIn={this.handleGoogleSingIn} />
             </MDBCardBody>
           </MDBCol>
